@@ -1,0 +1,411 @@
+[
+    {
+        "id": "eb6d24837462377e",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3192a1454d2a15a5",
+        "type": "mqtt in",
+        "z": "eb6d24837462377e",
+        "name": "",
+        "topic": "iot/sensors/test",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "7310cadd98d5f3b2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 220,
+        "wires": [
+            [
+                "a675ee9ece6f6b20"
+            ]
+        ]
+    },
+    {
+        "id": "4cd59f6d774d6ec6",
+        "type": "debug",
+        "z": "eb6d24837462377e",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "40df18125b29b24d",
+        "type": "mqtt out",
+        "z": "eb6d24837462377e",
+        "name": "",
+        "topic": "iot/sensors/test",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7310cadd98d5f3b2",
+        "x": 220,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "8381f2121143f04a",
+        "type": "inject",
+        "z": "eb6d24837462377e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "FROM_NODE_RED",
+        "payloadType": "str",
+        "x": 110,
+        "y": 500,
+        "wires": [
+            [
+                "40df18125b29b24d"
+            ]
+        ]
+    },
+    {
+        "id": "4c07edcd8da5d67b",
+        "type": "ui_text",
+        "z": "eb6d24837462377e",
+        "group": "75f6f6b8e882b795",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Message",
+        "format": "{{msg.payload.source}} | {{msg.payload.timestamp}} | {{msg.payload.content}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 100,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "74616d7fdf78df66",
+        "type": "mqtt out",
+        "z": "eb6d24837462377e",
+        "name": "",
+        "topic": "iot/locker/cmd",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7310cadd98d5f3b2",
+        "x": 80,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "436f487549dfa1b6",
+        "type": "ui_button",
+        "z": "eb6d24837462377e",
+        "name": "",
+        "group": "75f6f6b8e882b795",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "OPEN",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "OPEN",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 70,
+        "y": 740,
+        "wires": [
+            [
+                "bf3fc5b72b03c153"
+            ]
+        ]
+    },
+    {
+        "id": "bf3fc5b72b03c153",
+        "type": "mqtt out",
+        "z": "eb6d24837462377e",
+        "name": "",
+        "topic": "iot/locker/cmd",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "7310cadd98d5f3b2",
+        "x": 120,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "7e548e050d5f3e04",
+        "type": "ui_button",
+        "z": "eb6d24837462377e",
+        "name": "",
+        "group": "75f6f6b8e882b795",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "CLOSE",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "CLOSE",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 60,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a675ee9ece6f6b20",
+        "type": "function",
+        "z": "eb6d24837462377e",
+        "name": "function 1",
+        "func": "// Mock Twitter message\nlet ts = new Date().toISOString().slice(0, 19).replace(\"T\", \" \");\n\nlet unified = {\n    source: \"TWITTER\",\n    content: \"This is a mock tweet for the lab\",\n    timestamp: ts\n};\n\n// MySQL message\nlet msgSql = {};\nmsgSql.topic = \"INSERT INTO integrated_data (source, content, timestamp) VALUES (?, ?, ?)\";\nmsgSql.payload = [\"TWITTER\", unified.content, ts];\n\n// output 1 → MySQL\n// output 2 → Dashboard / Debug\nreturn [msgSql, { payload: unified }];\n",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 380,
+        "wires": [
+            [
+                "2f78290f15ddab1b"
+            ],
+            [
+                "4cd59f6d774d6ec6",
+                "4c07edcd8da5d67b"
+            ]
+        ]
+    },
+    {
+        "id": "2f78290f15ddab1b",
+        "type": "mysql",
+        "z": "eb6d24837462377e",
+        "mydb": "00f87326fc15e011",
+        "name": "",
+        "x": 520,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e32fc7c6ca79966",
+        "type": "inject",
+        "z": "eb6d24837462377e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "HELLO",
+        "payloadType": "str",
+        "x": 570,
+        "y": 420,
+        "wires": [
+            [
+                "a675ee9ece6f6b20"
+            ]
+        ]
+    },
+    {
+        "id": "950d1cf4703a5703",
+        "type": "inject",
+        "z": "eb6d24837462377e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 560,
+        "y": 540,
+        "wires": [
+            [
+                "583dcde7bce6fcf5"
+            ]
+        ]
+    },
+    {
+        "id": "583dcde7bce6fcf5",
+        "type": "http request",
+        "z": "eb6d24837462377e",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 550,
+        "y": 600,
+        "wires": [
+            [
+                "62f560eeec8d1149"
+            ]
+        ]
+    },
+    {
+        "id": "62f560eeec8d1149",
+        "type": "function",
+        "z": "eb6d24837462377e",
+        "name": "Twitter Normalize",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 660,
+        "wires": [
+            [
+                "a675ee9ece6f6b20"
+            ]
+        ]
+    },
+    {
+        "id": "7310cadd98d5f3b2",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "75f6f6b8e882b795",
+        "type": "ui_group",
+        "name": "",
+        "tab": "142ca7a7cc094ea3",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "00f87326fc15e011",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "localhost",
+        "port": "3306",
+        "db": "node_red_lab",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "142ca7a7cc094ea3",
+        "type": "ui_tab",
+        "name": "MQTT",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "4ff13854674ee169",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-node-mysql": "3.0.0"
+        }
+    }
+]
